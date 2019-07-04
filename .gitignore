@@ -272,5 +272,6 @@ __pycache__/
 
 # AppSettings
 appsettings.json
+appsettings.*.json
 
 # End of https://www.gitignore.io/api/aspnetcore

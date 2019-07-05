@@ -1,0 +1,15 @@
+﻿@{ ViewData["Title"] = "MapToGlobe"; }
+
+<div id="sideBar">
+    <div class="sidebar-title sidebar-group">
+        <h1>MapToGlobe</h1>
+    </div>
+    <div class="sidebar-main">
+        <sidebar-item v-for="item in sidebaritems" v-bind:key="item.id" v-bind:item="item"></sidebar-item>
+    </div>
+    <div id="loadKey" data-key="@ViewBag.LoadKey"></div>
+    <div id="loadJson" data-json="@ViewBag.LoadJson"></div>
+</div>
+<saved-modal v-bind:show="showSavedModal" v-on:close="showSavedModal = false"></saved-modal>
+<error-modal v-bind:show="showErrorModal" v-on:close="showErrorModal = false"></error-modal>
+<loading-overlay v-bind:show="showLoadingOverlay" v-on:close="showLoadingOverlay = false"></loading-overlay>

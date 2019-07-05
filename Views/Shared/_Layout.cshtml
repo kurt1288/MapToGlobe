@@ -1,0 +1,113 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{ 
+   string GAKey = Configuration.GetSection("GoogleAnalytics")["Key"];
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC|Roboto:300&display=swap" rel="stylesheet">
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <link href="~/css/modal.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/site.min.css" />
+    </environment>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vue-slider-component@3.0.32/theme/antd.min.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@GAKey"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', '@GAKey');
+    </script>
+</head>
+<body>
+    <script type="x/template" id="modal-template">
+        <div class="modal-mask" v-on:click="close" v-show="show">
+            <div class="modal-container" v-on:click.stop>
+                <slot></slot>
+            </div>
+        </div>
+    </script>
+
+    <script type="x/template" id="saved-modal-template">
+        <modal v-bind:show="show" v-on:close="close">
+            <div class="modal-header">
+                <h3>Saved Successfully</h3>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label for="shareLink">Share link (public):</label>
+                    <input v-on:click="copyLink" v-model="publicLink" id="shareLink" readonly />
+                </div>
+                <div>
+                    <p>DO NOT SHARE THE PRIVATE LINK.<br />Anyone with the private link can update your save.</p>
+                    <label for="updateLink">Update your save with this link (private):</label>
+                    <input v-on:click="copyLink" v-model="privateLink" id="updateLink" readonly />
+                </div>
+                <div>
+                    <p>This is the only time you will be shown this window. Please make sure to save both links.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close" v-on:click="close">Done</button>
+            </div>
+        </modal>
+    </script>
+
+    <script type="x/template" id="error-modal-template">
+        <modal v-bind:show="show" v-on:close="close">
+            <div class="modal-header">
+                <h3>Error</h3>
+            </div>
+            <div class="modal-body">
+                <p>There was an error while trying to complete the action. Please try again.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-close" v-on:click="close">Close</button>
+            </div>
+        </modal>
+    </script>
+
+    <script type="x/template" id="loading-overlay">
+        <div class="loading-overlay" v-bind:show="show" v-show="show">
+            <div class="loader">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+        </div>
+    </script>
+
+    <div id="app">
+        @RenderBody()
+    </div>
+    <canvas id="mainCanvas"></canvas>
+
+    <script src="~/lib/js/vue.min.js"></script>
+    <script src="https://unpkg.com/vuex@3.1.1"></script>
+    <script src="~/lib/js/three.min.js"></script>
+    <script src="~/lib/js/OrbitControls.js"></script>
+    <script src="~/lib/js/TransformControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-slider-component@3.0.32/dist/vue-slider-component.umd.min.js"></script>
+    <script src="~/lib/js/vue-color.min.js"></script>
+    <script src="~/lib/js/Tween.js"></script>
+    <environment include="Development">
+        <script type="module" src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script type="module" src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

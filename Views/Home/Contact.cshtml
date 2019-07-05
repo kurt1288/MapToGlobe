@@ -1,0 +1,21 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model ContactForm
+@{
+    ViewData["Title"] = "Contact";
+    Layout = "~/Views/Shared/_TextLayout.cshtml";
+}
+
+<h1>Contact</h1>
+
+<p>Before reporting an issue or sending me a message, please make sure to look at the <a href="/help">Help</a> page.</p>
+
+<h2>Issues</h2>
+<p>If you have found a problem, please first <a href="https://github.com/kurt1288/MapToGlobe/issues" target="_blank">look through the open issues</a>. If the issue you found has not already been reported, you may <a href="https://github.com/kurt1288/MapToGlobe/issues/new" target="_blank">create a new issue.</a></p>
+
+<h2>Message</h2>
+<p>Please fill out the form to send me a message. Please note that because it's just me, I may not be able to respond to all message.</p>
+<form asp-action="SendMessage" asp-controller="Home">
+    <div><input type="email" id="email" placeholder="Your email" asp-for="Email" required /></div>
+    <div><textarea placeholder="Your message" rows="10" id="message" asp-for="Message" required></textarea></div>
+    <button type="submit" id="submit">Send</button>
+</form>

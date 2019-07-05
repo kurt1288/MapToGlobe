@@ -564,6 +564,11 @@ Vue.component("sidebar-item", {
                     if (!file.type.match("image\/*")) // Stop if the uploaded file is not an image
                         return;
 
+                    // Don't allow files over 5MB to be uploaded
+                    if (file.size > 5242880) {
+                        vm.showErrorModal = true;
+                    }
+
                     switch (item.id) {
                         case "surfaceFileSelect":
                             this.$store.commit('surfaceFileSelect', file);

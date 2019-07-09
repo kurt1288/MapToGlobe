@@ -15,12 +15,13 @@
 
 <h1>Contact</h1>
 
-<p>Before reporting an issue or sending me a message, please make sure to look at the <a href="/help">Help</a> page.</p>
-
-<h2>Issues</h2>
-<p>If you have found a problem, please first <a href="https://github.com/kurt1288/MapToGlobe/issues" target="_blank">look through the open issues</a>. If the issue you found has not already been reported, you may <a href="https://github.com/kurt1288/MapToGlobe/issues/new" target="_blank">create a new issue.</a></p>
-
-<h2>Message</h2>
+<h2>Need help?</h2>
+<p>Check out the <a href="/help">Help</a> page.</p>
+<h2>Issues?</h2>
+<p>If you have found a problem, please first <a href="https://github.com/kurt1288/MapToGlobe/issues" target="_blank">look through the open issues</a>. If the issue you found has not already been reported, you may <a href="https://github.com/kurt1288/MapToGlobe/issues/new?labels=bug" target="_blank">create a new issue.</a></p>
+<h2>New Feature?</h2>
+<p>Want to suggest a new feature? First, look to see if the feature has already been suggested <a href="https://github.com/kurt1288/MapToGlobe/labels/enhancement">here</a>. If it hasn't, then go ahead and <a href="https://github.com/kurt1288/MapToGlobe/issues/new?labels=enhancement">submit a new one</a>.</p>
+<h2>Other</h2>
 <p>Please fill out the form to send me a message. Please note that because it's just me, I may not be able to respond to all message.</p>
 <form asp-action="SendMessage" asp-controller="Home" id="contactForm">
     <div><input type="email" id="email" placeholder="Your email" asp-for="Email" required /></div>
@@ -28,5 +29,5 @@
     <button class="g-recaptcha" id="contactSubmit" data-sitekey="@ReCaptchaKey" data-callback="onSubmit">Send</button>
     <input type="hidden" name="g-recaptcha-response" />
 </form>
-<p id="formSubtext">This form uses reCAPTCHA. Its use it subject to the Google <a href="https://www.google.com/policies/privacy/">privacy policy</a> and <a href="https://www.google.com/policies/terms/">terms of use</a>.</p>
+<p id="formSubtext">This form uses reCAPTCHA. Its use is subject to the Google <a href="https://www.google.com/policies/privacy/">privacy policy</a> and <a href="https://www.google.com/policies/terms/">terms of use</a>.</p>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>

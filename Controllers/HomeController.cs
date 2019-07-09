@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using MapToGlobe.Models;
 using CodenameGenerator;
 using System.IO;
-using System.Text;
-using System.Collections.Generic;
 
 namespace MapToGlobe.Controllers
 {
@@ -89,10 +87,15 @@ namespace MapToGlobe.Controllers
             string id = generator.Generate();
 
             // Random is used to generate the secret key used for updating a save
-            string key = Path.GetRandomFileName();
-            key = key.Substring(0, 8);
+            string editKey = Path.GetRandomFileName();
+            editKey = editKey.Substring(0, 8);
 
-            SavedScenes data = new SavedScenes { Id = id, Json = clientData.Data, Editkey = key };
+            // Generate the delete key
+            string deleteKey = Path.GetRandomFileName().Replace(".", string.Empty);
+
+            DateTime currentTime = DateTime.UtcNow;
+
+            SavedScenes data = new SavedScenes { Id = id, Json = clientData.Data, Editkey = editKey, Created = currentTime, DeleteKey = deleteKey, Updated = currentTime };
 
             _databaseContext.SavedScenes.Add(data);
             _databaseContext.SaveChanges();
@@ -114,6 +117,7 @@ namespace MapToGlobe.Controllers
             // Look for a record with the provided key and id. If no record is found, then the provided key and id do not match (so do not update the record)
             SavedScenes existingRecord = _databaseContext.SavedScenes.Single(x => x.Editkey == clientData.Key && x.Id == clientData.Id);
             existingRecord.Json = clientData.Data;
+            existingRecord.Updated = DateTime.UtcNow;
             _databaseContext.SaveChanges();
          }
          catch (System.InvalidOperationException)

@@ -27,17 +27,31 @@ namespace MapToGlobe
                 entity.Property(e => e.Editkey)
                     .IsRequired()
                     .HasColumnName("editkey")
-                    .HasColumnType("character(10)");
+                    .HasColumnType("character(8)");
 
                 entity.Property(e => e.Id)
                     .IsRequired()
                     .HasColumnName("id")
-                    .HasColumnType("character(15)");
+                    .HasColumnType("character(200)");
 
                 entity.Property(e => e.Json)
                     .IsRequired()
                     .HasColumnName("json")
                     .HasColumnType("jsonb");
+
+                entity.Property(e => e.Created)
+                    .IsRequired()
+                    .HasColumnName("created")
+                    .HasColumnType("timestamp");
+
+                entity.Property(e => e.Updated)
+                    .HasColumnName("updated")
+                    .HasColumnType("timestamp");
+
+                entity.Property(e => e.DeleteKey)
+                    .IsRequired()
+                    .HasColumnName("deletekey")
+                    .HasColumnType("character(11)");
             });
         }
     }

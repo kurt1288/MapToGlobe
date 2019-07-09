@@ -19,20 +19,22 @@ namespace MapToGlobe.Controllers
          _message = message;
       }
 
-      [Route("{loadkey?}")]
+      public IActionResult Index()
+      {
+         return View();
+      }
+
+      [Route("{loadkey}")]
       public IActionResult Index(string loadkey)
       {
-         if (!string.IsNullOrWhiteSpace(loadkey))
+         try
          {
-            try
-            {
-               SavedScenes data = _databaseContext.SavedScenes.Single(x => x.Id == loadkey);
-               ViewBag.LoadJson = data.Json;
-            }
-            catch (Exception)
-            {
-               return NotFound();
-            }
+            SavedScenes data = _databaseContext.SavedScenes.Single(x => x.Id == loadkey);
+            ViewBag.LoadJson = data.Json;
+         }
+         catch (Exception)
+         {
+            return NotFound();
          }
 
          ViewBag.LoadKey = loadkey;
@@ -101,7 +103,7 @@ namespace MapToGlobe.Controllers
             _databaseContext.SaveChanges();
 
             // Return a new json string without the saved json string because it doesn't need to be sent back to the client
-            return new JsonResult(Newtonsoft.Json.JsonConvert.SerializeObject(new { id = data.Id, key = data.Editkey }));
+            return new JsonResult(Newtonsoft.Json.JsonConvert.SerializeObject(new { id = data.Id, key = data.Editkey, delete = data.DeleteKey }));
          }
          catch (Exception)
          {
@@ -126,6 +128,24 @@ namespace MapToGlobe.Controllers
          }
 
          return Ok();
+      }
+
+      [Route("/delete/{id}/{key}/{deleteKey}")]
+      public IActionResult Delete(string id, string key, string deleteKey)
+      {
+         try
+         {
+            // Look for a record with the provided key and id. If no record is found, then the provided keys and id do not match (so do nothing)
+            SavedScenes existingRecord = _databaseContext.SavedScenes.Single(x => x.Editkey == key && x.Id == id && x.DeleteKey == deleteKey);
+            _databaseContext.Remove(existingRecord);
+            _databaseContext.SaveChanges();
+         }
+         catch (System.InvalidOperationException)
+         {
+            return StatusCode(400);
+         }
+
+         return RedirectToAction("Index");
       }
 
       [HttpPost, ValidateAntiForgeryToken]

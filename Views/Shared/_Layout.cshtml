@@ -50,9 +50,13 @@
                     <input v-on:click="copyLink" v-model="publicLink" id="shareLink" readonly />
                 </div>
                 <div>
-                    <p>DO NOT SHARE THE PRIVATE LINK.<br />Anyone with the private link can update your save.</p>
+                    <p>DO NOT SHARE THE LINKS BELOW.<br />Anyone with the private links can update or delete your save.</p>
                     <label for="updateLink">Update your save with this link (private):</label>
                     <input v-on:click="copyLink" v-model="privateLink" id="updateLink" readonly />
+                </div>
+                <div>
+                    <label for="deleteLink">Delete your save with this link (private):</label>
+                    <input v-on:click="copyLink" v-model="deleteLink" id="deleteLink" readonly />
                 </div>
                 <div>
                     <p>This is the only time you will be shown this window. Please make sure to save both links.</p>

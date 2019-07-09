@@ -20,7 +20,8 @@ const store = new Vuex.Store({
         lightAmbient: null,
         axisEnabled: false,
         publicLink: "",
-        privateLink: ""
+        privateLink: "",
+        deleteLink: ""
     },
     mutations: {
         resize: function () { MapToGlobe.WindowResize(); },
@@ -120,6 +121,9 @@ const store = new Vuex.Store({
         },
         setPrivateLink: function (state, link) {
             state.privateLink = link;
+        },
+        setDeleteLink: function (state, link) {
+            state.deleteLink = link;
         }
     },
     getters: {
@@ -347,6 +351,11 @@ Vue.component("SavedModal", {
             get: function() {
                 return this.$store.state.privateLink;
             }
+        },
+        deleteLink: {
+            get: function () {
+                return this.$store.state.deleteLink;
+            }
         }
     },
     methods: {
@@ -354,6 +363,7 @@ Vue.component("SavedModal", {
             this.$emit("close");
             this.$store.commit("setPublicLink", "");
             this.$store.commit("setPrivateLink", "");
+            this.$store.commit("setDeleteLink", "");
         },
         copyLink: function (e) {
             e.target.select();
@@ -428,6 +438,7 @@ Vue.component("sidebar-item", {
                             if (result.IsSuccess) {
                                 this.$store.commit("setPublicLink", window.location.origin + "/" + result.data.id);
                                 this.$store.commit("setPrivateLink", window.location.origin + "/" + result.data.id + "?key=" + result.data.key);
+                                this.$store.commit("setDeleteLink", window.location.origin + "/delete/" + result.data.id + "/" + result.data.key + "/" + result.data.delete);
                                 vm.showSavedModal = true;
                                 ga_event('Save', 'Save');
                             }

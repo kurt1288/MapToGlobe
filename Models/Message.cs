@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -10,11 +11,13 @@ namespace MapToGlobe.Models
    public class Message
    {
       private readonly EmailSettings _emailSettings;
+      private readonly ReCaptcha _recaptcha;
       public HttpClient Client { get; }
 
-      public Message(HttpClient client, IOptions<EmailSettings> emailSettings)
+      public Message(HttpClient client, IOptions<EmailSettings> emailSettings, IOptions<ReCaptcha> recaptcha)
       {
          _emailSettings = emailSettings.Value;
+         _recaptcha = recaptcha.Value;
 
          client.BaseAddress = new Uri(_emailSettings.APIBaseUri);
          client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(_emailSettings.APIKey)));
@@ -44,11 +47,22 @@ namespace MapToGlobe.Models
             return false;
          }
       }
+
+      public async Task<bool> ValidateToken(string token)
+      {
+         var response = await Client.PostAsync(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", _recaptcha.SecretKey, token), null);
+
+         var jsonResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<ReCatpchaResponse>(response.Content.ReadAsStringAsync().Result);
+
+         return jsonResponse.Success;
+      }
    }
 
    public class ContactForm
    {
       public string Email { get; set; }
       public string Message { get; set; }
+      [FromForm(Name = "g-recaptcha-response")]
+      public string ReCaptchaToken { get; set; }
    }
 }

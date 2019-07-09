@@ -127,6 +127,12 @@ namespace MapToGlobe.Controllers
       [HttpPost, ValidateAntiForgeryToken]
       public async Task<IActionResult> SendMessage([FromForm]ContactForm formValues)
       {
+         // Validate the provided Recaptcha verification token
+         bool valid = await _message.ValidateToken(formValues.ReCaptchaToken);
+
+         if (!valid)
+            return StatusCode(500);
+
          bool result = await _message.Send(formValues.Email, formValues.Message);
 
          if (result)

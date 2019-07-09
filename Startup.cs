@@ -24,6 +24,7 @@ namespace MapToGlobe
          services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Database"))).BuildServiceProvider();
          services.AddOptions();
          services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+         services.Configure<ReCaptcha>(Configuration.GetSection("ReCaptcha"));
          services.AddHttpClient<Message>();
       }
 

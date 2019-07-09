@@ -91,7 +91,7 @@ form {
     resize: vertical;
 }
 
-#submit {
+#contactSubmit {
     background: #3371ff;
     border: none;
     border-radius: 0.2rem;
@@ -101,6 +101,16 @@ form {
     font-size: 1rem;
     padding: 0.5rem;
     width: 6rem;
+}
+
+#contactSubmit:hover {
+    background: #1f63ff;
+}
+
+#formSubtext {
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    text-align: center;
 }
 
 @media (max-width: 800px) {

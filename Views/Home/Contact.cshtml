@@ -1,9 +1,17 @@
 ﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @model ContactForm
 @{
+    string ReCaptchaKey = Configuration.GetSection("ReCaptcha")["PublicKey"];
     ViewData["Title"] = "Contact";
     Layout = "~/Views/Shared/_TextLayout.cshtml";
 }
+<script>
+    function onSubmit(token) {
+        document.getElementById("contactForm").submit();
+    }
+</script>
 
 <h1>Contact</h1>
 
@@ -14,8 +22,11 @@
 
 <h2>Message</h2>
 <p>Please fill out the form to send me a message. Please note that because it's just me, I may not be able to respond to all message.</p>
-<form asp-action="SendMessage" asp-controller="Home">
+<form asp-action="SendMessage" asp-controller="Home" id="contactForm">
     <div><input type="email" id="email" placeholder="Your email" asp-for="Email" required /></div>
     <div><textarea placeholder="Your message" rows="10" id="message" asp-for="Message" required></textarea></div>
-    <button type="submit" id="submit">Send</button>
+    <button class="g-recaptcha" id="contactSubmit" data-sitekey="@ReCaptchaKey" data-callback="onSubmit">Send</button>
+    <input type="hidden" name="g-recaptcha-response" />
 </form>
+<p id="formSubtext">This form uses reCAPTCHA. Its use it subject to the Google <a href="https://www.google.com/policies/privacy/">privacy policy</a> and <a href="https://www.google.com/policies/terms/">terms of use</a>.</p>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>

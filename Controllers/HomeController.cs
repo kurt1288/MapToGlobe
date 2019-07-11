@@ -29,12 +29,15 @@ namespace MapToGlobe.Controllers
       {
          try
          {
-            SavedScenes data = _databaseContext.SavedScenes.Single(x => x.Id == loadkey);
+            SavedScenes data = _databaseContext.SavedScenes.SingleOrDefault(x => x.Id == loadkey);
+            if (data == null)
+               return NotFound();
+
             ViewBag.LoadJson = data.Json;
          }
          catch (Exception)
          {
-            return NotFound();
+            return StatusCode(500);
          }
 
          ViewBag.LoadKey = loadkey;

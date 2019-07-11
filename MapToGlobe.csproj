@@ -6,6 +6,10 @@
     <UserSecretsId>89af4bf5-d9a8-404e-9f6e-0ef911e7edbc</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\robots.txt" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.9.406" />

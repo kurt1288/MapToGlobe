@@ -1,10 +1,20 @@
-﻿html, body, #app {
+﻿html, body {
     height: 100%;
+    width: 100%;
 }
 
 body {
+    font-family: 'Roboto', Arial, sans-serif;
     margin: 0;
     user-select: none;
+}
+
+#app {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 15rem;
 }
 
 #mainCanvas {
@@ -34,11 +44,8 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    left: 0;
     overflow-y: auto;
-    position: absolute;
-    top: 0;
-    width: 15rem;
+    width: 100%;
     z-index: 1;
 }
 
@@ -55,7 +62,6 @@ body {
 #sideBar a, #sideBar button, input[type=checkbox] + label, input[type=radio] + label, input[type=file] + label {
     cursor: pointer;
     display: block;
-    font-family: 'Roboto', Arial, sans-serif;
     padding: 0.6rem 2rem;
 }
 
@@ -167,8 +173,34 @@ ul {
     padding-left: 1rem;
 }
 
-#loadKey {
+#loadKey, #loadJson {
     display: none;
+}
+
+#mobileMessage {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding: 1rem;
+    background: #35536d;
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+
+@media (max-width:900px) {
+    #app {
+        display: none;
+    }
+
+    #mainCanvas {
+        left: 0;
+    }
+
+    #mobileMessage {
+        display: block;
+    }
 }
 
 /* Loading spinner - from http://codepen.io/martinvd/pen/xbQJom */

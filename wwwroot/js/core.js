@@ -8,15 +8,15 @@ class MapToGlobe {
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color("black");
 
+        // Renderer
+        this.renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mainCanvas"), alpha: true, preserveDrawingBuffer: true, antialias: true });
+        this.renderer.setSize(window.innerWidth - document.getElementById("app").offsetWidth, window.innerHeight);
+        this.renderer.shadowMap.enabled = true;
+
         // Camera
         this.camera = new THREE.PerspectiveCamera(25, document.getElementById("mainCanvas").offsetWidth / document.getElementById("mainCanvas").offsetHeight, 0.1, 2000);
         this.camera.position.z = 12;
         this.scene.add(this.camera);
-
-        // Renderer
-        this.renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("mainCanvas"), alpha: true, preserveDrawingBuffer: true, antialias: true });
-        this.renderer.setSize(window.innerWidth - document.getElementById("sideBar").offsetWidth, window.innerHeight);
-        this.renderer.shadowMap.enabled = true;
 
         // Controls
         const orbitControls = new THREE.OrbitControls(this.camera, this.renderer.domElement);

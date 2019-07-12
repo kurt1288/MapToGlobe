@@ -125,6 +125,8 @@ class MapToGlobe {
 
             // Need to set the camera to the new camera and the controls to the new camera
             instance.camera = object.children.find(x => x.type === "PerspectiveCamera");
+            instance.camera.aspect = document.getElementById("mainCanvas").offsetWidth / document.getElementById("mainCanvas").offsetHeight;
+            instance.camera.updateProjectionMatrix();
             const orbitControls = new THREE.OrbitControls(instance.camera, instance.renderer.domElement);
             const transformControls = new THREE.TransformControls(instance.camera, instance.renderer.domElement);
             transformControls.addEventListener("dragging-changed", function (event) {

@@ -205,7 +205,7 @@ ul {
 
 /* Loading spinner - from http://codepen.io/martinvd/pen/xbQJom */
 .loading-overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;

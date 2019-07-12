@@ -34,6 +34,7 @@ namespace MapToGlobe.Controllers
                return NotFound();
 
             ViewBag.LoadJson = data.Json;
+            ViewBag.Name = data.Name;
          }
          catch (Exception)
          {

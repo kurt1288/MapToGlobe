@@ -10,5 +10,6 @@ namespace MapToGlobe
       public DateTime Created { get; set; }
       public DateTime Updated { get; set; }
       public string DeleteKey { get; set; }
+      public string Name { get; set; }
    }
 }

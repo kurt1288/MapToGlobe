@@ -1,4 +1,7 @@
-﻿@{ ViewData["Title"] = "MapToGlobe"; }
+﻿@{ 
+   string title = !string.IsNullOrEmpty(ViewBag.Name) ? string.Concat(ViewBag.Name, " - ", "MapToGlobe") : "MapToGlobe";
+   ViewData["Title"] = title;
+}
 
 <div id="sideBar">
     <div class="sidebar-title sidebar-group">

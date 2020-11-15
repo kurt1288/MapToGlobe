@@ -89,6 +89,7 @@ export default class Planet {
         });
 
         const mesh = new THREE.Mesh(sphereGeometry, material);
+        mesh.name = "clouds";
         this.object.add(mesh);
     }
 }

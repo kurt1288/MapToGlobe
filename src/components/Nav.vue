@@ -68,7 +68,8 @@
                         </div>
                     </div>
 
-                    <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="planet" @click="toggleControls">Toggle Controls</button>
+                    <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="planet" @click="toggleControls">Toggle Planet Controls</button>
+                    <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="clouds" @click="toggleControls" :disabled="!images.clouds">Toggle Cloud Controls</button>
                 </div>
             </div>
 
@@ -291,7 +292,8 @@ export default defineComponent({
                 }
             },
             images: {
-                surface: false
+                surface: false,
+                clouds: false
             },
             atmosphere: {
                 enabled: false
@@ -354,9 +356,11 @@ export default defineComponent({
             return;
         },
         setCloudsImage(event: Event) {
+            Firebase.analytics.logEvent("set_planet_clouds");
             const files = (event.target as HTMLInputElement).files;
             if (files !== null) {
                 this.maptoglobe.planet.SetCloudsImage(files[0]);
+                this.images.clouds = true;
             }
         },
         toggleMoon() {
@@ -427,6 +431,9 @@ export default defineComponent({
                     Firebase.analytics.logEvent("toggle_rotation_controls");
                     this.maptoglobe.ToggleControls(this.maptoglobe.moon.moon);
                     break;
+                case "clouds":
+                    Firebase.analytics.logEvent("toggle_clouds_controls");
+                    this.maptoglobe.ToggleControls(this.maptoglobe.planet.object.getObjectByName("clouds") as THREE.Mesh);
             }
         },
         moonScale(value: number) {

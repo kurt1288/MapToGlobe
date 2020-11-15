@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <h4 class="text-gray-400 px-12 py-2">Atmosphere</h4>
+                    <!-- <h4 class="text-gray-400 px-12 py-2">Atmosphere</h4>
                     <div class="cursor-pointer grid justify-start items-center hover:bg-blue-500 hover:text-white menuCheckbox">
                         <label class="cursor-pointer py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" for="showAtmosphereToggle">Show</label>
                         <div class="bg-white border-1 rounded-sm border-gray-400 w-3 h-3 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
@@ -61,7 +61,7 @@
                     </div>
                     <div>
                         <button type="button" class="cursor-pointer text-left w-full py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" :disabled="!atmosphere.enabled">Settings</button>
-                    </div>
+                    </div> -->
 
                     <h4 class="text-gray-400 px-12 py-2">Other</h4>
                     <div class="cursor-pointer grid justify-start items-center hover:bg-blue-500 hover:text-white menuCheckbox">

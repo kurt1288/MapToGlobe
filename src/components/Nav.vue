@@ -42,13 +42,9 @@
                         <input type="file" class="hidden" id="specularFileSelect" @change="setSpecularImage" :disabled="!images.surface">
                         <label for="specularFileSelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Specular</label>
                     </div>
-
-                    <h4 class="text-gray-400 px-12 py-2">Clouds</h4>
-                    <div class="cursor-pointer grid justify-start items-center hover:bg-blue-500 hover:text-white menuCheckbox">
-                        <div>
-                            <input type="file" class="hidden" id="cloudsFileSelect" @change="setCloudsImage" :disabled="!images.surface">
-                            <label for="cloudsFileSelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Image</label>
-                        </div>
+                    <div>
+                        <input type="file" class="hidden" id="cloudsFileSelect" @change="setCloudsImage" :disabled="!images.surface">
+                        <label for="cloudsFileSelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Clouds</label>
                     </div>
 
                     <!-- <h4 class="text-gray-400 px-12 py-2">Atmosphere</h4>
@@ -72,7 +68,7 @@
                         </div>
                     </div>
 
-                    <button type="button" class="cursor-pointer text-left w-full py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="planet" @click="toggleControls">Toggle Controls</button>
+                    <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="planet" @click="toggleControls">Toggle Controls</button>
                 </div>
             </div>
 

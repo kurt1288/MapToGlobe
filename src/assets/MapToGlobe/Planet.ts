@@ -75,4 +75,20 @@ export default class Planet {
             this.object.remove(axis);
         }
     }
+
+    SetCloudsImage(file: File) {
+        const sphereGeometry = new THREE.SphereBufferGeometry(2.02, 100, 100);
+        const image = new THREE.TextureLoader().load(URL.createObjectURL(file));
+
+        const material = new THREE.MeshPhongMaterial({
+            map: image,
+            transparent: true,
+            depthWrite: false,
+            side: THREE.DoubleSide,
+            opacity: 0.8
+        });
+
+        const mesh = new THREE.Mesh(sphereGeometry, material);
+        this.object.add(mesh);
+    }
 }

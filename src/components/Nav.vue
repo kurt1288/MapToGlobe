@@ -287,8 +287,8 @@ export default defineComponent({
                     distance: 3
                 },
                 light: {
-                    sunIntensity: 1,
-                    ambientIntensity: 0
+                    sunIntensity: 0.4,
+                    ambientIntensity: 0.6
                 }
             },
             images: {

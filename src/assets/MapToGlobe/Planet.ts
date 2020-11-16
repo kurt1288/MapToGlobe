@@ -83,13 +83,21 @@ export default class Planet {
         const material = new THREE.MeshPhongMaterial({
             map: image,
             transparent: true,
-            depthWrite: false,
             side: THREE.DoubleSide,
-            opacity: 0.8
+            opacity: 0.8 // This needs to match the light intensity value in the scene
         });
 
         const mesh = new THREE.Mesh(sphereGeometry, material);
         mesh.name = "clouds";
+
+        mesh.customDepthMaterial = new THREE.MeshDepthMaterial({
+            depthPacking: THREE.RGBADepthPacking,
+            map: image,
+            alphaTest: 0.4
+        });
+
+        mesh.castShadow = true;
+
         this.object.add(mesh);
     }
 }

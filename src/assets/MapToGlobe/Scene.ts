@@ -2,15 +2,15 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
 
-interface SceneInterface {
-    scene: THREE.Scene;
-    renderer: THREE.Renderer;
-    camera: THREE.PerspectiveCamera;
-    controls: TransformControls;
-    light: THREE.Object3D;
-}
+// interface SceneInterface {
+//     scene: THREE.Scene;
+//     renderer: THREE.Renderer;
+//     camera: THREE.PerspectiveCamera;
+//     controls: TransformControls;
+//     light: THREE.Object3D;
+// }
 
-export default class Scene implements SceneInterface {
+export default class Scene {
     scene: THREE.Scene;
     renderer: THREE.Renderer;
     camera: THREE.PerspectiveCamera;
@@ -45,16 +45,22 @@ export default class Scene implements SceneInterface {
         const light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(0, 0, 100);
         light.name = "directionalLight";
-        
-        const ambientLight = new THREE.AmbientLight(0x404040, 0);
-        ambientLight.name = "ambientLight";
-
         light.castShadow = true;
+        light.intensity = 0.8 / 2;
+
+        // To lighten shadows. See https://github.com/mrdoob/three.js/pull/14087#issuecomment-431003830
+        const light2 = light.clone();
+        light2.castShadow = false;
+        light2.intensity = 1 - (0.8/2);
+        
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+        ambientLight.name = "ambientLight";
 
         const anchor = new THREE.Object3D();
         anchor.position.set(0, 0, 0);
         anchor.name = "lightParent";
         anchor.add(light);
+        anchor.add(light2);
 
         scene.add(ambientLight);
         scene.add(anchor);
@@ -89,7 +95,8 @@ export default class Scene implements SceneInterface {
     }
 
     SetSunIntensity(num: number) {
-        (this.light.children[0] as THREE.DirectionalLight).intensity = num;
+        (this.light.children[0] as THREE.DirectionalLight).intensity = num / 2;
+        //(this.light.children[1] as THREE.DirectionalLight).intensity = 1 - (num/2);
     }
 
     SetAmbientIntensity(num: number) {

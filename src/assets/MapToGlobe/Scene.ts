@@ -8,6 +8,7 @@ export default class Scene {
     camera: THREE.PerspectiveCamera;
     controls: TransformControls;
     light: THREE.Object3D;
+    ambient: THREE.AmbientLight;
 
     constructor(element: HTMLCanvasElement) {
         const scene = new THREE.Scene();
@@ -38,12 +39,12 @@ export default class Scene {
         light.position.set(0, 0, 100);
         light.name = "directionalLight";
         light.castShadow = true;
-        light.intensity = 0.8 / 2;
+        light.intensity = 0.4;
 
         // To lighten shadows. See https://github.com/mrdoob/three.js/pull/14087#issuecomment-431003830
         const light2 = light.clone();
         light2.castShadow = false;
-        light2.intensity = 1 - (0.8/2);
+        light2.intensity = 1 - 0.4;
         
         const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
         ambientLight.name = "ambientLight";
@@ -68,6 +69,7 @@ export default class Scene {
         this.camera = camera;
         this.controls = transformControls;
         this.light = anchor;
+        this.ambient = ambientLight;
     }
 
     SetBGBlack() {

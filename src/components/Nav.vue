@@ -307,6 +307,7 @@ export default defineComponent({
     },
     async mounted() {
         this.maptoglobe = new MapToGlobe(document.getElementById("scene") as HTMLCanvasElement);
+        
         if (this.$route.params.saveId) {
             this.loading = true;
             const data = await Firebase.Get(this.$route.params.saveId as string);
@@ -323,6 +324,11 @@ export default defineComponent({
             }
             this.loading = false;
         }
+
+        this.menu.light.sunIntensity = (this.maptoglobe.instance.light.children[0] as THREE.DirectionalLight).intensity;
+        this.menu.light.ambientIntensity = this.maptoglobe.instance.ambient.intensity;
+        this.menu.moon.distance = this.maptoglobe.moon.moon.position.x;
+        this.menu.moon.scale = this.maptoglobe.moon.moon.scale.x;
     },
     methods: {
         setSurfaceImage(event: Event) {

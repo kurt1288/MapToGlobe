@@ -2,14 +2,6 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
 
-// interface SceneInterface {
-//     scene: THREE.Scene;
-//     renderer: THREE.Renderer;
-//     camera: THREE.PerspectiveCamera;
-//     controls: TransformControls;
-//     light: THREE.Object3D;
-// }
-
 export default class Scene {
     scene: THREE.Scene;
     renderer: THREE.Renderer;

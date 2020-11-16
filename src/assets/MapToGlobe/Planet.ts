@@ -10,7 +10,9 @@ export default class Planet {
         }
 
         const materialArray = [
-            new THREE.MeshPhongMaterial(), // main material
+            new THREE.MeshPhongMaterial({
+                shininess: 60
+            }), // main material
             new THREE.ShaderMaterial({ visible: false }) // material for atmopshere
         ];
 

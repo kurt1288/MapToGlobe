@@ -171,32 +171,36 @@ export default class MapToGlobe {
         data = JSON.parse(pako.inflate(atob(JSON.parse(data)), { to: "string" }));
         const loader = new THREE.ObjectLoader();
         
-        loader.parse(data, (object: THREE.Object3D) => {
-            const rings = object.getObjectByName("rings");
-            const moon = object.getObjectByName("moon");
+        return new Promise((resolve, reject) => {
+            loader.parse(data, (object: THREE.Object3D) => {
+                const rings = object.getObjectByName("rings");
+                const moon = object.getObjectByName("moon");
+    
+                // Remove original planet and add one from saved data
+                this.instance.scene.remove(this.instance.scene.getObjectByName("planet") as THREE.Object3D);
+                this.planet = new Planet(object.getObjectByName("planet") as THREE.Mesh);
+                this.instance.scene.add(this.planet.object);
+    
+                // Remove original rings and add one from saved data
+                if (rings) {
+                    this.instance.scene.remove(this.instance.scene.getObjectByName("rings") as THREE.Object3D);
+                    this.rings = new Rings(this.instance.scene, rings as THREE.Mesh);
+                    this.instance.scene.add(this.rings.object);
+                }
+    
+                // Remove original moon and add one from saved data
+                if (moon) {
+                    this.instance.scene.remove(this.instance.scene.getObjectByName("moon") as THREE.Object3D);
+                    this.moon = new Moon(this.instance.scene, moon as THREE.Mesh);
+                    this.instance.scene.add(this.moon.object);
+                }
+    
+                // Set light properties
+                this.instance.SetAmbientIntensity((object.getObjectByName("ambientLight") as THREE.AmbientLight).intensity);
+                this.instance.SetSunIntensity((object.getObjectByName("directionalLight") as THREE.DirectionalLight).intensity);
 
-            // Remove original planet and add one from saved data
-            this.instance.scene.remove(this.instance.scene.getObjectByName("planet") as THREE.Object3D);
-            this.planet = new Planet(object.getObjectByName("planet") as THREE.Mesh);
-            this.instance.scene.add(this.planet.object);
-
-            // Remove original rings and add one from saved data
-            if (rings) {
-                this.instance.scene.remove(this.instance.scene.getObjectByName("rings") as THREE.Object3D);
-                this.rings = new Rings(this.instance.scene, rings as THREE.Mesh);
-                this.instance.scene.add(this.rings.object);
-            }
-
-            // Remove original moon and add one from saved data
-            if (moon) {
-                this.instance.scene.remove(this.instance.scene.getObjectByName("moon") as THREE.Object3D);
-                this.moon = new Moon(this.instance.scene, moon as THREE.Mesh);
-                this.instance.scene.add(this.moon.object);
-            }
-
-            // Set light properties
-            this.instance.SetAmbientIntensity((object.getObjectByName("ambientLight") as THREE.AmbientLight).intensity);
-            this.instance.SetSunIntensity((object.getObjectByName("directionalLight") as THREE.DirectionalLight).intensity);
+                resolve();
+            })
         })
     }
 }

@@ -315,7 +315,7 @@ export default defineComponent({
             if (data.success) {
                 this.loadedJson = data.data;
                 this.images.surface = true;
-                this.maptoglobe.Load(data.data);
+                await this.maptoglobe.Load(data.data);
             }
             else {
                 this.saveModal.success = false;

@@ -34,10 +34,10 @@
                         <input type="file" class="hidden" id="heightmapFileSelect" @change="setHeightmapImage" :disabled="!images.surface">
                         <label for="heightmapFileSelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Heightmap</label>
                     </div>
-                    <div>
+                    <!-- <div>
                         <input type="file" class="hidden" id="nightFileSelect" :disabled="!images.surface">
                         <label for="nightFileSelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Night</label>
-                    </div>
+                    </div> -->
                     <div>
                         <input type="file" class="hidden" id="specularFileSelect" @change="setSpecularImage" :disabled="!images.surface">
                         <label for="specularFileSelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Specular</label>
@@ -60,16 +60,13 @@
                     </div> -->
 
                     <h4 class="text-gray-400 px-12 py-2">Other</h4>
-                    <div class="cursor-pointer grid justify-start items-center hover:bg-blue-500 hover:text-white menuCheckbox">
-                        <label class="cursor-pointer py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" for="showAxisToggle">Show Axis</label>
-                        <div class="bg-white border-1 rounded-sm border-gray-400 w-3 h-3 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
-                            <input type="checkbox" class="opacity-0 absolute cursor-pointer" id="showAxisToggle" @change="toggleAxis">
-                            <svg class="fill-current hidden w-4 h-4 text-green-500 pointer-events-none" viewBox="0 0 20 20"><path d="M0 11l2-2 5 5L18 3l2 2L7 18z"/></svg>
-                        </div>
-                    </div>
-
+                    <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" @click="toggleAxis">Toggle Axis</button>
                     <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="planet" @click="toggleControls">Toggle Planet Controls</button>
                     <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="clouds" @click="toggleControls" :disabled="!images.clouds">Toggle Cloud Controls</button>
+                    <p class="font-sans text-left text-sm mt-0 font-normal w-full py-2 pl-16 block text-gray-100">Shininess</p>
+                    <div class="py-2 pl-20 pr-10">
+                        <vue-slider v-model="menu.planet.shininess" :min="0" :max="100" :interval="0.1" :tooltip="'none'" @change="planetShininess"></vue-slider>
+                    </div>
                 </div>
             </div>
 
@@ -281,6 +278,9 @@ export default defineComponent({
                     gif: false,
                     screenshot: false
                 },
+                planet: {
+                    shininess: 60
+                },
                 moon: {
                     controls: false,
                     scale: 1,
@@ -325,6 +325,7 @@ export default defineComponent({
             this.loading = false;
         }
 
+        this.menu.planet.shininess = ((this.maptoglobe.planet.object.material as THREE.Material[])[0] as THREE.MeshPhongMaterial).shininess;
         this.menu.light.sunIntensity = (this.maptoglobe.instance.light.children[0] as THREE.DirectionalLight).intensity;
         this.menu.light.ambientIntensity = this.maptoglobe.instance.ambient.intensity;
         this.menu.moon.distance = this.maptoglobe.moon.moon.position.x;
@@ -368,6 +369,9 @@ export default defineComponent({
                 this.maptoglobe.planet.SetCloudsImage(files[0]);
                 this.images.clouds = true;
             }
+        },
+        planetShininess(value: number) {
+            ((this.maptoglobe.planet.object.material as THREE.Material[])[0] as THREE.MeshPhongMaterial).shininess = value;
         },
         toggleMoon() {
             Firebase.analytics.logEvent("toggle_moon");

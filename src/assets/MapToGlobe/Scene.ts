@@ -1,3 +1,4 @@
+import { Tween, Easing } from '@tweenjs/tween.js';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
@@ -9,6 +10,8 @@ export default class Scene {
     controls: TransformControls;
     light: THREE.Object3D;
     ambient: THREE.AmbientLight;
+    orbitControls: OrbitControls;
+    oldLightPosition: THREE.Quaternion;
 
     constructor(element: HTMLCanvasElement) {
         const scene = new THREE.Scene();
@@ -24,9 +27,17 @@ export default class Scene {
         camera.position.z = 12;
         scene.add(camera);
 
+        // Sun light
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(0, 0, 100);
+        light.name = "directionalLight";
+        light.castShadow = true;
+        light.intensity = 0.4;
+
         // Controls
         const orbitControls = new OrbitControls(camera, renderer.domElement);
         orbitControls.enablePan = false;
+        orbitControls.enableDamping = true;
         const transformControls = new TransformControls(camera, renderer.domElement);
         transformControls.addEventListener("dragging-changed", function (event: THREE.Event) {
             orbitControls.enabled = !event.value;
@@ -34,12 +45,6 @@ export default class Scene {
         transformControls.setMode("rotate");
         transformControls.setSize(1.5);
         scene.add(transformControls);
-
-        const light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(0, 0, 100);
-        light.name = "directionalLight";
-        light.castShadow = true;
-        light.intensity = 0.4;
 
         // To lighten shadows. See https://github.com/mrdoob/three.js/pull/14087#issuecomment-431003830
         const light2 = light.clone();
@@ -55,8 +60,10 @@ export default class Scene {
         anchor.add(light);
         anchor.add(light2);
 
+        this.oldLightPosition = anchor.quaternion.clone();
+
         scene.add(ambientLight);
-        scene.add(anchor);
+        camera.add(anchor);
 
         window.addEventListener("resize", () => {
             this.camera.aspect = (element.parentElement as HTMLDivElement).clientWidth / window.innerHeight;
@@ -70,6 +77,7 @@ export default class Scene {
         this.controls = transformControls;
         this.light = anchor;
         this.ambient = ambientLight;
+        this.orbitControls = orbitControls;
     }
 
     SetBGBlack() {
@@ -90,10 +98,23 @@ export default class Scene {
 
     SetSunIntensity(num: number) {
         (this.light.children[0] as THREE.DirectionalLight).intensity = num / 2;
-        //(this.light.children[1] as THREE.DirectionalLight).intensity = 1 - (num/2);
     }
 
     SetAmbientIntensity(num: number) {
         (this.scene.getObjectByName("ambientLight") as THREE.AmbientLight).intensity = num;
+    }
+
+    SetSunFar() {
+        this.light.applyQuaternion(this.camera.quaternion.clone());
+        this.scene.add(this.light);
+        new Tween(this.light.quaternion).to(this.oldLightPosition, 750).easing(Easing.Cubic.Out).start();
+    }
+
+    SetSunClose() {
+        this.oldLightPosition = this.light.quaternion.clone();
+        const endQuaternion = this.camera.quaternion.clone();
+        this.light.applyQuaternion(endQuaternion.clone().inverse());
+        this.camera.add(this.light);
+        new Tween(this.light.quaternion).to(new THREE.Quaternion(), 750).easing(Easing.Cubic.Out).start();
     }
 }

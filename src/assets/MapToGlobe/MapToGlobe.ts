@@ -37,6 +37,21 @@ export default class MapToGlobe {
         this.moon = new Moon(this.instance.scene);
         this.rings = new Rings(this.instance.scene);
 
+        let oldDistance = this.instance.camera.getWorldPosition(new THREE.Vector3(0,0,0)).distanceTo(this.planet.object.getWorldPosition(new THREE.Vector3(0,0,0)));
+
+        this.instance.orbitControls.addEventListener("change", (event: THREE.Event) => {
+            const newDistance = this.instance.camera.getWorldPosition(new THREE.Vector3(0,0,0)).distanceTo(this.planet.object.getWorldPosition(new THREE.Vector3(0,0,0)));
+            
+            if (oldDistance < 15 && newDistance > 15) {
+                this.instance.SetSunFar();
+            }
+            else if (oldDistance > 15 && newDistance < 15) {
+                this.instance.SetSunClose();
+            }
+
+            oldDistance = newDistance;
+        });
+
         this.animationId = 0;
 
         this.Animate();
@@ -45,8 +60,9 @@ export default class MapToGlobe {
     Animate() {
         this.animationId = requestAnimationFrame(this.Animate.bind(this));
 
-        if (this.gif === true)
-            TWEEN.update();
+        this.instance.orbitControls.update();
+
+        TWEEN.update();
 
         this.instance.renderer.render(this.instance.scene, this.instance.camera);
     }

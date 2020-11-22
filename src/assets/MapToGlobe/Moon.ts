@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 
 export default class Moon {
-    private scene: THREE.Scene;
+    private planet: THREE.Mesh;
     moon: THREE.Mesh;
     object: THREE.Object3D;
 
-    constructor(scene: THREE.Scene, json?: THREE.Mesh) {
-        this.scene = scene;
+    constructor(planet: THREE.Mesh, json?: THREE.Mesh) {
+        this.planet = planet;
 
         if (json) {
             this.moon = json;
@@ -31,12 +31,12 @@ export default class Moon {
     }
 
     Show() {
-        if (!this.scene.getObjectById(this.object.id))
-            this.scene.add(this.object);
+        if (!this.planet.getObjectById(this.object.id))
+            this.planet.add(this.object);
     }
 
     Remove() {
-        this.scene.remove(this.object);
+        this.planet.remove(this.object);
     }
 
     SetSurfaceImage(file: File) {

@@ -12,6 +12,7 @@ export default class Scene {
     ambient: THREE.AmbientLight;
     orbitControls: OrbitControls;
     oldLightPosition: THREE.Quaternion;
+    pivotObject = new THREE.Object3D();
 
     constructor(element: HTMLCanvasElement) {
         const scene = new THREE.Scene();
@@ -65,6 +66,8 @@ export default class Scene {
         scene.add(ambientLight);
         camera.add(anchor);
 
+        scene.add(this.pivotObject);
+
         window.addEventListener("resize", () => {
             this.camera.aspect = (element.parentElement as HTMLDivElement).clientWidth / window.innerHeight;
             this.camera.updateProjectionMatrix();
@@ -106,7 +109,7 @@ export default class Scene {
 
     SetSunFar() {
         this.light.applyQuaternion(this.camera.quaternion.clone());
-        this.scene.add(this.light);
+        this.pivotObject.add(this.light);
         new Tween(this.light.quaternion).to(this.oldLightPosition, 750).easing(Easing.Cubic.Out).start();
     }
 

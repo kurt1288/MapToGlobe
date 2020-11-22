@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import * as TWEEN from '@tweenjs/tween.js';
+import { Tween, update } from '@tweenjs/tween.js';
 import CanvasVideo from './CanvasVideo';
 import * as Firebase from '../../firebase';
 import { RouteLocationNormalizedLoaded } from 'vue-router';
@@ -23,19 +23,19 @@ interface SaveResponse {
 
 export default class MapToGlobe {
     private animationId: number;
-    private gif = false;
     instance: Scene;
     planet: Planet;
     moon: Moon;
     rings: Rings;
+    sunFar = false;
 
     constructor(element: HTMLCanvasElement) {
         this.instance = new Scene(element);
         this.planet = new Planet();
-        this.instance.scene.add(this.planet.object);
+        this.instance.pivotObject.add(this.planet.object);
 
-        this.moon = new Moon(this.instance.scene);
-        this.rings = new Rings(this.instance.scene);
+        this.moon = new Moon(this.planet.object);
+        this.rings = new Rings(this.planet.object);
 
         let oldDistance = this.instance.camera.getWorldPosition(new THREE.Vector3(0,0,0)).distanceTo(this.planet.object.getWorldPosition(new THREE.Vector3(0,0,0)));
 
@@ -44,9 +44,11 @@ export default class MapToGlobe {
             
             if (oldDistance < 15 && newDistance > 15) {
                 this.instance.SetSunFar();
+                this.sunFar = true;
             }
             else if (oldDistance > 15 && newDistance < 15) {
                 this.instance.SetSunClose();
+                this.sunFar = false;
             }
 
             oldDistance = newDistance;
@@ -62,7 +64,7 @@ export default class MapToGlobe {
 
         this.instance.orbitControls.update();
 
-        TWEEN.update();
+        update(); // Update tween
 
         this.instance.renderer.render(this.instance.scene, this.instance.camera);
     }
@@ -108,14 +110,14 @@ export default class MapToGlobe {
 
     Gif(canvas: CanvasElement) {
         const video = new CanvasVideo(canvas, 4000000);
-        const tween = new TWEEN.Tween(this.planet.object.rotation).to({ y: `+${(360 * (Math.PI / 180))}` }, 5000);
+
+        const object = this.sunFar ? this.instance.pivotObject.rotation : this.planet.object.rotation;
+        const tween = new Tween(object).to({ y: `+${(360 * (Math.PI / 180))}` }, 5000);
 
         video.Start();
         tween.onComplete(() => {
-            this.gif = false;
             video.Stop();
         }).start();
-        this.gif = true;
     }
     
     Screenshot(canvas: CanvasElement) {
@@ -200,14 +202,14 @@ export default class MapToGlobe {
                 // Remove original rings and add one from saved data
                 if (rings) {
                     this.instance.scene.remove(this.instance.scene.getObjectByName("rings") as THREE.Object3D);
-                    this.rings = new Rings(this.instance.scene, rings as THREE.Mesh);
+                    this.rings = new Rings(this.planet.object, rings as THREE.Mesh);
                     this.instance.scene.add(this.rings.object);
                 }
     
                 // Remove original moon and add one from saved data
                 if (moon) {
                     this.instance.scene.remove(this.instance.scene.getObjectByName("moon") as THREE.Object3D);
-                    this.moon = new Moon(this.instance.scene, moon as THREE.Mesh);
+                    this.moon = new Moon(this.planet.object, moon as THREE.Mesh);
                     this.instance.scene.add(this.moon.object);
                 }
     

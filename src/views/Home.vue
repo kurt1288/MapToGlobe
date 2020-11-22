@@ -1,5 +1,5 @@
 <template>
-  <div class="block md:grid" style="grid-template-columns: 15rem 1fr;">
+  <div class="block md:grid" id="container">
     <Nav class="hidden md:block" />
     <div class="relative">
       <div class="pointer-events-none absolute bottom-0 left-0 right-0 w-full text-center">

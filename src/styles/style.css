@@ -22,6 +22,10 @@
         line-height: 1.5rem;
         margin-top: 0.5rem;
     }
+
+    #container {
+        grid-template-columns: 15rem minmax(0,1fr);
+    }
 }
 
 @layer utilities {

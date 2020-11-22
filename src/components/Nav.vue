@@ -2,14 +2,17 @@
     <div class="h-screen bg-gray-700 overflow-y-auto">
         <Loader v-if="loading" class="absolute w-full h-full inset-0" />
         <SaveModal v-if="saveModal.show" :success="saveModal.success" :id="saveModal.id" :updateKey="saveModal.key" :message="saveModal.message" @close="saveModal.show = false" />
-        <div class="flex flex-col items-center justify-center mt-8">
-            <h1 class="leading-none text-3xl text-white font-normal">MapToGlobe</h1>
-            <p class="text-sm m-0 text-white">Beta</p>
-            <p class="text-sm text-red-600 px-6 py-3 text-center bg-gray-600">This is a beta. Anything saved may be deleted.</p>
+        <div class="flex flex-col items-center justify-center">
+            <div class="text-sm text-red-600 mt-0 px-6 py-3 text-center bg-gray-600 flex items-center">
+                <svg class="h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <p class="mt-0">This is a beta. Anything saved may be deleted.</p>
+            </div>
         </div>
 
         <nav class="mt-6 select-none">
-            <h3 class="w-full flex text-gray-400 px-6">Objects</h3>
+            <h3 class="w-full flex text-gray-400 px-6 pb-2">Objects</h3>
             <div>
                 <button @click="menu.open.planet = !menu.open.planet" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
                     <span class="flex items-center">
@@ -25,7 +28,7 @@
                 </button>
 
                 <div v-show="menu.open.planet" class="bg-gray-700">
-                    <h4 class="text-gray-400 px-12 py-2">Images</h4>
+                    <h4 class="text-gray-400 px-12 py-2 text-sm">Images</h4>
                     <div>
                         <input type="file" class="hidden" id="surfaceFileSelect" @change="setSurfaceImage">
                         <label for="surfaceFileSelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Surface</label>
@@ -59,7 +62,7 @@
                         <button type="button" class="cursor-pointer text-left w-full py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" :disabled="!atmosphere.enabled">Settings</button>
                     </div> -->
 
-                    <h4 class="text-gray-400 px-12 py-2">Other</h4>
+                    <h4 class="text-gray-400 px-12 py-2 text-sm">Other</h4>
                     <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" @click="toggleAxis">Toggle Axis</button>
                     <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="planet" @click="toggleControls">Toggle Planet Controls</button>
                     <button type="button" class="cursor-pointer text-left w-full py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="clouds" @click="toggleControls" :disabled="!images.clouds">Toggle Cloud Controls</button>
@@ -170,7 +173,7 @@
                 </button>
 
                 <div v-show="menu.open.background" class="bg-gray-700">
-                    <h4 class="text-gray-400 px-12 py-2">Type</h4>
+                    <h4 class="text-gray-400 px-12 py-2 text-sm">Type</h4>
                     <div class="cursor-pointer grid justify-start items-center hover:bg-blue-500 hover:text-white menuCheckbox">
                         <label class="cursor-pointer py-2 pl-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" for="blackBG">Solid black</label>
                         <div class="bg-white border-1 rounded-sm border-gray-400 w-3 h-3 flex flex-shrink-0 justify-center items-center mr-2 focus-within:border-blue-500">
@@ -223,12 +226,12 @@
                 </div>
             </div>
 
-            <h3 class="w-full flex text-gray-400 px-6 pt-4">Save / Export</h3>
+            <h3 class="w-full flex text-gray-400 px-6 pt-4 pb-2">Save / Export</h3>
             <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="makeGif">Make a gif</button>
             <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="takeScreenshot">Take a screenshot</button>
             <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="save">Save</button>
 
-            <h3 class="w-full flex text-gray-400 px-6 pt-4">Help</h3>
+            <h3 class="w-full flex text-gray-400 px-6 pt-4 pb-2">Help</h3>
             <router-link to="/help" class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" target="_blank">
                 Help
                 <svg class="h-5 w-5 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

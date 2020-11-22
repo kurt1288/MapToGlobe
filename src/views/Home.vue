@@ -1,7 +1,10 @@
 <template>
   <div class="block md:grid" style="grid-template-columns: 15rem 1fr;">
     <Nav class="hidden md:block" />
-    <div>
+    <div class="relative">
+      <div class="pointer-events-none absolute bottom-0 left-0 right-0 w-full text-center">
+        <h1 class="mb-2 text-xl text-white font-normal">MapToGlobe <span class="text-sm">beta</span></h1>
+      </div>
       <Scene />
     </div>
   </div>

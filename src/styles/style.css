@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans+SC:wght@400;500&family=Roboto:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Quicksand&display=swap');
 
 @layer base {
     button:focus {
@@ -10,12 +10,15 @@
     }
 
     h1, h2, h3, h4, h5 {
-        font-family: 'Alegreya Sans SC', Arial, sans-serif;
+        font-family: 'Quicksand', Arial, sans-serif;
         font-weight: 500;
     }
 
-    p, li {
+    p, span, li, label, button {
         font-family: 'Roboto', Arial, sans-serif;
+    }
+
+    p, li {
         line-height: 1.5rem;
         margin-top: 0.5rem;
     }

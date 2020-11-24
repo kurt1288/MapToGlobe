@@ -239,6 +239,7 @@
                 </svg>
             </router-link>
         </nav>
+        <ExploreBar />
     </div>
 </template>
 
@@ -247,6 +248,7 @@ import { defineComponent } from 'vue';
 import VueSlider from 'vue-slider-component';
 import Loader from '@/components/Loader.vue';
 import SaveModal from '@/components/SaveModal.vue';
+import ExploreBar from '@/components/ExploreBar.vue';
 import 'vue-slider-component/theme/antd.css';
 import MapToGlobe from '../assets/MapToGlobe/MapToGlobe';
 import * as Firebase from '../firebase';
@@ -259,7 +261,8 @@ export default defineComponent({
     components: {
         VueSlider,
         Loader,
-        SaveModal
+        SaveModal,
+        ExploreBar
     },
     data() {
         return {
@@ -308,25 +311,15 @@ export default defineComponent({
             loadedJson: {}
         }
     },
+    created() {
+        this.$watch(
+            () => this.$route.params,
+            () => { if (this.$route.params.saveId.length > 0) this.Load(this.$route.params.saveId as string) },
+            { immediate: true }
+        )
+    },
     async mounted() {
         this.maptoglobe = new MapToGlobe(document.getElementById("scene") as HTMLCanvasElement);
-        
-        if (this.$route.params.saveId) {
-            this.loading = true;
-            const data = await Firebase.Get(this.$route.params.saveId as string);
-
-            if (data.success) {
-                this.loadedJson = data.data;
-                this.images.surface = true;
-                await this.maptoglobe.Load(data.data);
-            }
-            else {
-                this.saveModal.success = false;
-                this.saveModal.message = data.message as string;
-                this.saveModal.show = true;
-            }
-            this.loading = false;
-        }
 
         this.menu.planet.shininess = ((this.maptoglobe.planet.object.material as THREE.Material[])[0] as THREE.MeshPhongMaterial).shininess;
         this.menu.light.sunIntensity = (this.maptoglobe.instance.light.children[0] as THREE.DirectionalLight).intensity;
@@ -491,6 +484,28 @@ export default defineComponent({
                     this.saveModal.message = response.message;
             }
             this.saveModal.show = true;
+            this.loading = false;
+        },
+        async Load(item: string) {
+            this.loading = true;
+            const data = await Firebase.Get(item);
+
+            if (data.success) {
+                this.loadedJson = data.data;
+                this.images.surface = true;
+                await this.maptoglobe.Load(data.data);
+
+                this.menu.planet.shininess = ((this.maptoglobe.planet.object.material as THREE.Material[])[0] as THREE.MeshPhongMaterial).shininess;
+                this.menu.light.sunIntensity = (this.maptoglobe.instance.light.children[0] as THREE.DirectionalLight).intensity;
+                this.menu.light.ambientIntensity = this.maptoglobe.instance.ambient.intensity;
+                this.menu.moon.distance = this.maptoglobe.moon.moon.position.x;
+                this.menu.moon.scale = this.maptoglobe.moon.moon.scale.x;
+            }
+            else {
+                this.saveModal.success = false;
+                this.saveModal.message = data.message as string;
+                this.saveModal.show = true;
+            }
             this.loading = false;
         }
     }

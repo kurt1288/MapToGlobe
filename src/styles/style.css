@@ -14,7 +14,7 @@
         font-weight: 500;
     }
 
-    p, span, li, label, button {
+    a, p, span, li, label, button {
         font-family: 'Roboto', Arial, sans-serif;
     }
 

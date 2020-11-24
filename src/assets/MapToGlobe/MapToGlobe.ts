@@ -121,7 +121,7 @@ export default class MapToGlobe {
     }
     
     Screenshot(canvas: CanvasElement) {
-        const canvasData = canvas.toDataURL("image/jpeg", 7.0);
+        const canvasData = canvas.toDataURL();
 
         const a = document.createElement("a");
         document.body.appendChild(a);

@@ -141,11 +141,15 @@ export default class MapToGlobe {
 
         /* Three.js currently does not save/load the customDepthMaterial property, so it has to be done manually */
         const cloudsNode = this.instance.scene.getObjectByName("clouds");
-        const cloudsNodeJson = cloudsNode?.customDepthMaterial.toJSON();
-        delete cloudsNodeJson.textures;
-        delete cloudsNodeJson.images;
-        delete cloudsNodeJson.metadata;
-        sceneJson.materials.push(cloudsNodeJson);
+        if (cloudsNode !== undefined) {
+            const cloudsNodeJson = cloudsNode.customDepthMaterial.toJSON();
+            delete cloudsNodeJson.textures;
+            delete cloudsNodeJson.images;
+            delete cloudsNodeJson.metadata;
+            sceneJson.materials.push(cloudsNodeJson);
+        }
+
+        console.log(sceneJson);
 
         try {
             const currentImages = sceneJson.images;
@@ -203,10 +207,10 @@ export default class MapToGlobe {
                 const moon = object.getObjectByName("moon");
     
                 // Remove original planet and add one from saved data
-                this.instance.scene.remove(this.instance.scene.getObjectByName("planet") as THREE.Object3D);
+                this.instance.pivotObject.remove(this.instance.scene.getObjectByName("planet") as THREE.Object3D);
                 this.planet = new Planet(object.getObjectByName("planet") as THREE.Mesh);
                 this.planet.CloudLoader(data);
-                this.instance.scene.add(this.planet.object);
+                this.instance.pivotObject.add(this.planet.object);
     
                 // Remove original rings and add one from saved data
                 if (rings) {

@@ -14,9 +14,12 @@
         <nav class="mt-6 select-none">
             <h3 class="w-full flex text-gray-400 px-6 pb-2">Objects</h3>
             <div>
-                <button @click="menu.open.planet = !menu.open.planet" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
+                <button @click="menu.open.planet = !menu.open.planet" class="w-full flex justify-between items-center py-3 pl-10 pr-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
                     <span class="flex items-center">
-                        <span class="mx-4">Planet</span>
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span class="mx-6">Planet</span>
                     </span>
 
                     <span>
@@ -74,9 +77,12 @@
             </div>
 
             <div>
-                <button @click="menu.open.moon = !menu.open.moon" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
+                <button @click="menu.open.moon = !menu.open.moon" class="w-full flex justify-between items-center py-3 pl-10 pr-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
                     <span class="flex items-center">
-                        <span class="mx-4">Moon</span>
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                        <span class="mx-6">Moon</span>
                     </span>
 
                     <span>
@@ -127,9 +133,12 @@
             </div>
 
             <div>
-                <button @click="menu.open.rings = !menu.open.rings" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
+                <button @click="menu.open.rings = !menu.open.rings" class="w-full flex justify-between items-center py-3 pl-10 pr-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
                     <span class="flex items-center">
-                        <span class="mx-4">Rings</span>
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <span class="mx-6">Rings</span>
                     </span>
 
                     <span>
@@ -159,9 +168,12 @@
             </div>
 
             <div>
-                <button @click="menu.open.background = !menu.open.background" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
+                <button @click="menu.open.background = !menu.open.background" class="w-full flex justify-between items-center py-3 pl-10 pr-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
                     <span class="flex items-center">
-                        <span class="mx-4">Background</span>
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                        </svg>
+                        <span class="mx-6">Background</span>
                     </span>
 
                     <span>
@@ -200,9 +212,12 @@
             </div>
 
             <div>
-                <button @click="menu.open.lights = !menu.open.lights" class="w-full flex justify-between items-center py-3 px-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
+                <button @click="menu.open.lights = !menu.open.lights" class="w-full flex justify-between items-center py-3 pl-10 pr-6 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none">
                     <span class="flex items-center">
-                        <span class="mx-4">Lights</span>
+                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <span class="mx-6">Lights</span>
                     </span>
 
                     <span>
@@ -226,16 +241,37 @@
                 </div>
             </div>
 
-            <h3 class="w-full flex text-gray-400 px-6 pt-4 pb-2">Save / Export</h3>
-            <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="makeGif">Make a gif</button>
-            <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="takeScreenshot">Take a screenshot</button>
-            <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="save">Save</button>
+            <h3 class="w-full flex text-gray-400 px-6 pt-4 pb-2">Share</h3>
+            <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="takeScreenshot">
+                <span class="flex items-center">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span class="mx-6">Screenshot</span>
+                </span>
+            </button>
+            <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="makeGif">
+                <span class="flex items-center">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <span class="mx-6">Animation</span>
+                </span>
+            </button>
+            <button class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" @click="save">
+                <span class="flex items-center">
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    <span class="mx-6">Save</span>
+                </span>
+            </button>
 
-            <h3 class="w-full flex text-gray-400 px-6 pt-4 pb-2">Help</h3>
+            <h3 class="w-full flex text-gray-400 px-6 pt-4 pb-2">Other</h3>
             <router-link to="/help" class="w-full flex justify-between items-center py-3 px-10 text-gray-100 cursor-pointer hover:bg-gray-800 hover:text-gray-100 focus:outline-none" target="_blank">
                 Help
-                <svg class="h-5 w-5 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                <svg class="h-4 w-4 mt-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
             </router-link>
         </nav>

@@ -139,6 +139,14 @@ export default class MapToGlobe {
         const imageLoader = new THREE.ImageLoader();
         const sceneJson = this.instance.scene.toJSON();
 
+        /* Three.js currently does not save/load the customDepthMaterial property, so it has to be done manually */
+        const cloudsNode = this.instance.scene.getObjectByName("clouds");
+        const cloudsNodeJson = cloudsNode?.customDepthMaterial.toJSON();
+        delete cloudsNodeJson.textures;
+        delete cloudsNodeJson.images;
+        delete cloudsNodeJson.metadata;
+        sceneJson.materials.push(cloudsNodeJson);
+
         try {
             const currentImages = sceneJson.images;
 
@@ -197,6 +205,7 @@ export default class MapToGlobe {
                 // Remove original planet and add one from saved data
                 this.instance.scene.remove(this.instance.scene.getObjectByName("planet") as THREE.Object3D);
                 this.planet = new Planet(object.getObjectByName("planet") as THREE.Mesh);
+                this.planet.CloudLoader(data);
                 this.instance.scene.add(this.planet.object);
     
                 // Remove original rings and add one from saved data

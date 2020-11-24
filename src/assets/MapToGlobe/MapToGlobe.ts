@@ -149,8 +149,6 @@ export default class MapToGlobe {
             sceneJson.materials.push(cloudsNodeJson);
         }
 
-        console.log(sceneJson);
-
         try {
             const currentImages = sceneJson.images;
 

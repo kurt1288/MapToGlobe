@@ -1,5 +1,5 @@
 <template>
-  <div class="block md:grid" id="container">
+  <div class="block md:grid relative overflow-hidden" id="container">
     <Nav class="hidden md:block" />
     <div class="relative">
       <div class="pointer-events-none absolute bottom-0 left-0 right-0 w-full text-center">

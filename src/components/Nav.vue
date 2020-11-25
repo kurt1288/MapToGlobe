@@ -162,6 +162,10 @@
                         <input type="file" class="hidden" id="ringsSurfaceSelect" @change="setRingsImage" :disabled="!ringsVisible">
                         <label for="ringsSurfaceSelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Surface</label>
                     </div>
+                    <div>
+                        <input type="file" class="hidden" id="ringsTransparencySelect" @change="setRingsTransparency" :disabled="!ringsVisible">
+                        <label for="ringsTransparencySelect" class="cursor-pointer py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white">Transparency</label>
+                    </div>
 
                     <button type="button" class="cursor-pointer text-left w-full py-2 px-16 block text-sm text-gray-100 hover:bg-blue-500 hover:text-white" value="rings" :disabled="!ringsVisible" @click="toggleControls">Toggle Controls</button>
                 </div>
@@ -433,6 +437,12 @@ export default defineComponent({
             if (files !== null) {
                 this.maptoglobe.rings.SetSurfaceImage(files[0]);
             }
+        },
+        setRingsTransparency(event: Event) {
+            Firebase.analytics.logEvent("set_rings_transparency");
+            const files = (event.target as HTMLInputElement).files;
+            if (files !== null)
+                this.maptoglobe.rings.SetTransparencyImage(files[0]);
         },
         setBgBlack() {
             Firebase.analytics.logEvent("set_bg_black");

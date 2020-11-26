@@ -6,15 +6,29 @@
                 <div class="inner two absolute w-full h-full box-border"></div>
                 <div class="inner three absolute w-full h-full box-border"></div>
             </div>
-            <p class="mt-2 text-lg">Loading</p>
+            <p class="mt-2 text-lg">{{ LoadingMessage }}</p>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-export default {
-  
-}
+import { computed, defineComponent } from 'vue';
+
+export default defineComponent({
+  props: {
+    message: {
+      type: String,
+      required: false
+    }
+  },
+  setup(props) {
+    const LoadingMessage = computed(() => {
+      return props.message ? props.message : "Loading";
+    });
+
+    return { LoadingMessage };
+  }
+})
 </script>
 
 <style scoped>

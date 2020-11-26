@@ -156,6 +156,9 @@ export default class MapToGlobe {
                 return { success: false, message: "Nothing to save." };
 
             for (let i = 0; i < currentImages.length; i++) {
+                const event = new CustomEvent('set_loading_message', { detail: `Uploading image ${i + 1} of ${currentImages.length}` });
+                window.dispatchEvent(event);
+
                 const data = new FormData();
 
                 // Don't want to upload images again to Imgur if they already are. Need to load the URL to get the base64 for comparison.
@@ -182,9 +185,14 @@ export default class MapToGlobe {
                 currentImages[i].url = result.data.link;
             }
 
+            let event = new CustomEvent('set_loading_message', { detail: `Compressing` });
+            window.dispatchEvent(event);
+
             let deflated = pako.deflate(JSON.stringify(sceneJson), { to: "string" });
             deflated = btoa(deflated);
 
+            event = new CustomEvent('set_loading_message', { detail: `Finalizing` });
+            window.dispatchEvent(event);
             if (route.params.saveId && route.query.key !== undefined)
                 return await Firebase.Update(deflated, { id: route.params.saveId, key: route.query.key });
             else

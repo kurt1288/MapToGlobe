@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen bg-gray-700 overflow-y-auto">
-        <Loader v-if="loading" class="absolute w-full h-full inset-0" />
+        <Loader v-if="loading" class="absolute w-full h-full inset-0" :message="loader.message" />
         <SaveModal v-if="saveModal.show" :success="saveModal.success" :id="saveModal.id" :updateKey="saveModal.key" :message="saveModal.message" @close="saveModal.show = false" />
         <div class="flex flex-col items-center justify-center">
             <div class="text-sm text-red-600 mt-0 px-6 py-3 text-center bg-gray-600 flex items-center">
@@ -307,6 +307,9 @@ export default defineComponent({
     data() {
         return {
             loading: false,
+            loader: {
+                message: null
+            },
             saveModal: {
                 show: false,
                 success: false,
@@ -359,6 +362,10 @@ export default defineComponent({
         )
     },
     async mounted() {
+        window.addEventListener("set_loading_message", (e: CustomEventInit) => {
+            this.loader.message = e.detail;
+        });
+        
         this.maptoglobe = new MapToGlobe(document.getElementById("scene") as HTMLCanvasElement);
 
         this.menu.planet.shininess = ((this.maptoglobe.planet.object.material as THREE.Material[])[0] as THREE.MeshPhongMaterial).shininess;
@@ -533,6 +540,9 @@ export default defineComponent({
             this.loading = false;
         },
         async Load(item: string) {
+            const event = new CustomEvent('set_loading_message', { detail: `Loading` });
+            window.dispatchEvent(event);
+
             this.loading = true;
             const data = await Firebase.Get(item);
 

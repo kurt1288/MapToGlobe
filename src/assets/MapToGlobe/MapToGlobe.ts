@@ -152,6 +152,10 @@ export default class MapToGlobe {
         try {
             const currentImages = sceneJson.images;
 
+            if (loadedJson.length !== undefined){
+                loadedJson = JSON.parse(pako.inflate(atob(JSON.parse(loadedJson)), { to: "string" }));
+            }
+
             if (currentImages === undefined || currentImages.length <= 0)
                 return { success: false, message: "Nothing to save." };
 
@@ -162,9 +166,14 @@ export default class MapToGlobe {
                 const data = new FormData();
 
                 // Don't want to upload images again to Imgur if they already are. Need to load the URL to get the base64 for comparison.
-                const image = await imageLoader.loadAsync(currentImages[i].url);
-                if ((loadedJson.images !== undefined && loadedJson.images.length > 0) && image.src === loadedJson.images[i].url)
-                    continue;
+                if (loadedJson.images[i] !== undefined) {
+                    const imageElement = await imageLoader.loadAsync(loadedJson.images[i].url);
+                    const image = THREE.ImageUtils.getDataURL(imageElement);
+                    if ((loadedJson.images !== undefined && loadedJson.images.length > 0) && image === currentImages[i].url) {
+                        currentImages[i].url = loadedJson.images[i].url;
+                        continue;
+                    }
+                }
 
                 data.append("image", currentImages[i].url.replace(/^data:image\/.+;base64,/, ""));
                 data.append("type", "base64");
@@ -185,6 +194,14 @@ export default class MapToGlobe {
                 currentImages[i].url = result.data.link;
             }
 
+            // If an image is somehow skipped for uploading, don't save (prevents large base64 images from saving to database)
+            for (const item of currentImages) {
+                if (item.url.length > 100) {
+                    Firebase.analytics.logEvent("save_image_too_long");
+                    throw new Error("There was an error while trying to save. If you see this message, something has gone seriously wrong. Please contact the developer.");
+                }
+            }
+
             let event = new CustomEvent('set_loading_message', { detail: `Compressing` });
             window.dispatchEvent(event);
 
@@ -199,7 +216,7 @@ export default class MapToGlobe {
                 return await Firebase.Save(deflated);
         }
         catch (exception) {
-            return { success: false, message: `There was an error while trying to save: ${exception}` };
+            return { success: false, message: `${exception.message}` };
         }
     }
 
